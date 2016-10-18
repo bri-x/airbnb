@@ -1,0 +1,15 @@
+<div class="sign-up col-lg-6 col-xs-12">
+
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+      <h2>Edit your information</h2>
+    </div>
+  </div>
+
+  <%= form_for @user do |form| %>
+    <%= render partial: '/users/form', object: form %>
+    <%= form.submit "Update", class: "btn btn-primary" %><br/><br/>
+  <% end %>
+
+</div>

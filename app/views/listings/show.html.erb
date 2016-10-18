@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+<h1><%= @listing.name %></h1>
+<p><%= @listing.description %></p>
+<button>Book now!</button>
+<% if @listing.host.id == current_user.id %>
+<%= link_to 'Edit', edit_listing_path(@listing) %> |
+<%= link_to 'Back', listings_path %>
+<% end %>

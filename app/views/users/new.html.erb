@@ -8,19 +8,16 @@
   </div>
 
   <%= form_for @user do |form| %>
+
     <%= render partial: '/users/form', object: form %>
 
-    <div class="submit-field form-group row">
-      <div class="offset-sm-2 col-sm-10">
-        <button type="submit" class="btn btn-primary">Sign up</button>
-      </div>
-    </div>
+     <%= form.submit "Sign up", class: "btn btn-primary" %><br/><br/>
 
-    <div class="other-links">
-      <%= button_to "Sign up with Facebook", "/auth/facebook", class: "btn btn-primary" %><br/><br/>
-      <%= link_to t(".sign_in"), sign_in_path %>
-    </div>
-  <% end %>
+		<div class="other-links">
+		  <%= button_to "Sign up with Facebook", "/auth/facebook", class: "btn btn-primary" %><br/><br/>
+		  <%= link_to t(".sign_in"), sign_in_path %>
+		</div>
+	<% end %>
 </div>
 
 
