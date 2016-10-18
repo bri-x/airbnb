@@ -1,17 +1,26 @@
-<div id="clearance" class="sign-up">
-  <h2><%= t(".title") %></h2>
+<div id="clearance" class="sign-up col-lg-6 col-xs-12">
+
+  <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10">
+      <h2><%= t(".title") %></h2>
+    </div>
+  </div>
 
   <%= form_for @user do |form| %>
     <%= render partial: '/users/form', object: form %>
 
-    <div class="submit-field">
-      <%= form.submit %>
+    <div class="submit-field form-group row">
+      <div class="offset-sm-2 col-sm-10">
+        <button type="submit" class="btn btn-primary">Sign up</button>
+      </div>
     </div>
 
     <div class="other-links">
+      <%= button_to "Sign up with Facebook", "/auth/facebook", class: "btn btn-primary" %><br/><br/>
       <%= link_to t(".sign_in"), sign_in_path %>
     </div>
   <% end %>
 </div>
 
-<%= link_to "Sign in with facebook", "/auth/facebook" %>
+
