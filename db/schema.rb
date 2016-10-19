@@ -11,13 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018044002) do
+ActiveRecord::Schema.define(version: 20161019071342) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "authentications", force: :cascade do |t|
     t.string   "uid"
     t.string   "token"
     t.string   "provider"
     t.string   "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities", force: :cascade do |t|
+    t.string   "name"
+    t.string   "state"
+    t.string   "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -31,37 +42,30 @@ ActiveRecord::Schema.define(version: 20161018044002) do
     t.integer "price"
     t.integer "min_stay"
     t.string  "address"
-    t.integer "host_id"
+    t.integer "user_id"
+    t.integer "city_id"
+    t.json    "avatars"
   end
 
-  add_index "listings", ["host_id"], name: "index_listings_on_host_id"
+  add_index "listings", ["city_id"], name: "index_listings_on_city_id", using: :btree
+  add_index "listings", ["user_id"], name: "index_listings_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       limit: 128
-    t.datetime "created_at"
+    t.integer "tag_id"
+    t.integer "listing_id"
+    t.string  "context"
   end
 
-  add_index "taggings", ["context"], name: "index_taggings_on_context"
-  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
-  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context"
-  add_index "taggings", ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
-  add_index "taggings", ["taggable_id"], name: "index_taggings_on_taggable_id"
-  add_index "taggings", ["taggable_type"], name: "index_taggings_on_taggable_type"
-  add_index "taggings", ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
-  add_index "taggings", ["tagger_id"], name: "index_taggings_on_tagger_id"
+  add_index "taggings", ["listing_id"], name: "index_taggings_on_listing_id", using: :btree
+  add_index "taggings", ["tag_id", "context"], name: "index_taggings_on_tag_id_and_context", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.string   "name"
+    t.integer  "count",      default: 0
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
-
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "users", force: :cascade do |t|
     t.string "name"
@@ -69,9 +73,14 @@ ActiveRecord::Schema.define(version: 20161018044002) do
     t.string "encrypted_password", limit: 128
     t.string "confirmation_token", limit: 128
     t.string "remember_token",     limit: 128
+    t.string "avatar"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email"
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
+  add_foreign_key "listings", "cities"
+  add_foreign_key "listings", "users"
+  add_foreign_key "taggings", "listings"
+  add_foreign_key "taggings", "tags"
 end

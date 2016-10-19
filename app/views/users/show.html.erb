@@ -1,4 +1,6 @@
+<%= image_tag (@user.avatar.thumb.url) %>
 <h1><%= @user.name %></h1>
+
 <% @user.listings.each do |list| %>
 	<h3><%= list.name %></h3>
 	<p><%= list.description %></p>

@@ -1,8 +1,26 @@
 <p id="notice"><%= notice %></p>
 <h1><%= @listing.name %></h1>
 <p><%= @listing.description %></p>
-<button>Book now!</button>
-<% if @listing.host.id == current_user.id %>
-<%= link_to 'Edit', edit_listing_path(@listing) %> |
-<%= link_to 'Back', listings_path %>
+<p><%= @listing.property_type %></p>
+<p><%= @listing.room_type %></p>
+<p><%= @listing.no_guest %> guest</p>
+<p>RM<%= @listing.price %> per night</p>
+<p>Minimum stay: <%= @listing.min_stay %> night</p>
+<p><%= @listing.address %></p>
+<p><%= @listing.city.name + ", " + @listing.city.state + ", " + @listing.city.country %></p>
+<p><%= @listing.amenity_list %></p>
+<p><%= @listing.rule_list %></p>
+<p>Hosted by:<%= @listing.user.name %></p>
+<p><%= image_tag (@listing.avatars[0].large.url) %></p>
+
+
+<% if @listing.user == current_user %>
+	<%= link_to 'Edit', edit_listing_path(@listing) %> |
+	<%= link_to 'Back', listings_path %>
+	<%= link_to 'Delete', listing_path(@listing), method: :delete %>
+<% else %>
+	Check in <br/>
+	Check out <br/>
+	Guests <br/>
+	<button>Book now!</button>
 <% end %>

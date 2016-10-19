@@ -8,8 +8,8 @@ class UsersController < Clearance::UsersController
   end
 
   def update
-    byebug
-    if current_user.update(user_params)
+    if current_user.update(user_params_revised)
+      byebug
       redirect_to current_user
     else
       render :edit
@@ -28,15 +28,17 @@ class UsersController < Clearance::UsersController
     name = user_params.delete(:name)
     email = user_params.delete(:email)
     password = user_params.delete(:password)
+    avatar = user_params.delete(:avatar)
 
     Clearance.configuration.user_model.new(user_params).tap do |user|
       user.name = name
       user.email = email
       user.password = password
+      user.avatar = avatar
     end
   end
 
-  def user_params
-    params[Clearance.configuration.user_parameter] || Hash.new
+  def user_params_revised
+    params.require(:user).permit(:name, :email, :password, :avatar)
   end
 end

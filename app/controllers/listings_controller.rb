@@ -29,16 +29,11 @@ class ListingsController < ApplicationController
     @listing = current_user.listings.new(listing_params)
     @listing.amenity_list = params[:listing][:amenity]
     @listing.rule_list = params[:listing][:rule]
-
-    respond_to do |format|
       if @listing.save
-        format.html { redirect_to @listing, notice: 'Listing was successfully created.' }
-        format.json { render :show, status: :created, location: @listing }
+        redirect_to @listing, notice: 'Listing was successfully created.'
       else
-        format.html { render :new }
-        format.json { render json: @listing.errors, status: :unprocessable_entity }
+        render :new
       end
-    end
   end
 
   # PATCH/PUT /listings/1
@@ -73,6 +68,6 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :no_guest, :price, :min_stay, :address)
+      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :no_guest, :price, :min_stay, :address, :city_id, {avatars:[]})
     end
 end

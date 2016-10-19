@@ -9,7 +9,7 @@ class CreateListings < ActiveRecord::Migration
       t.integer :price
       t.integer :min_stay
       t.string :address
-      t.references :host, index: true, foreign_key: true
+      t.belongs_to :user, index: true, foreign_key: true
     end
   end
 end
