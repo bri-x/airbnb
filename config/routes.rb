@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
 
+  resources :reservations
+  post '/reservations/create' => 'reservations#create', :as => :create_reservation
+
   resources :listings
   get 'static_pages/home'
 

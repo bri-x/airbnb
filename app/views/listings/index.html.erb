@@ -17,7 +17,7 @@
       <tr>
         <td>put photo here</td>
       </tr>
-      <% if listing.host.id == current_user.id %>
+      <% if listing.user == current_user %>
       <tr>
         <td><%= link_to 'Edit', edit_listing_path(listing) %>
           <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %></td>

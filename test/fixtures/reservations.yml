@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  users_id: 
+  listings_id: 
+  in: 2016-10-19
+  out: 2016-10-19
+
+two:
+  users_id: 
+  listings_id: 
+  in: 2016-10-19
+  out: 2016-10-19

@@ -10,6 +10,10 @@ class UsersController < Clearance::UsersController
   def update
     if current_user.update(user_params_revised)
       byebug
+      if params[:user][:remove_avatar] == 1
+        current_user.remove_avatar!
+        current_user.save
+      end
       redirect_to current_user
     else
       render :edit
@@ -28,13 +32,11 @@ class UsersController < Clearance::UsersController
     name = user_params.delete(:name)
     email = user_params.delete(:email)
     password = user_params.delete(:password)
-    avatar = user_params.delete(:avatar)
 
     Clearance.configuration.user_model.new(user_params).tap do |user|
       user.name = name
       user.email = email
       user.password = password
-      user.avatar = avatar
     end
   end
 
