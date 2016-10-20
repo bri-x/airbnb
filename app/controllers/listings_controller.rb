@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
 
-  before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :set_listing, only: [:show, :edit, :update, :destroy, :book]
 
   # GET /listings
   # GET /listings.json
@@ -11,7 +11,6 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
-    @reservation = current_user.reservations.new
   end
 
   # GET /listings/new
@@ -62,6 +61,11 @@ class ListingsController < ApplicationController
     end
   end
 
+  def book
+    @listing.be_booked! current_user, booking_params
+    redirect_to current_user
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_listing
@@ -70,6 +74,14 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :no_guest, :price, :min_stay, :address, :city_id, {photos:[]})
+      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :capacity, :price, :min_stay, :address, :city_id, {photos:[]})
+    end
+
+    def booking_params
+      hash = params.require(:booking).permit(:time_start, :time_end, :amount)
+      hash[:time_start] = Date.parse(hash[:time_start])
+      hash[:time_end] = Date.parse(hash[:time_end])
+      hash[:amount] = hash[:amount].to_i
+      return hash
     end
 end

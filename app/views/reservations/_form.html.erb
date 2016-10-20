@@ -1,13 +1,6 @@
-<%= form_for @reservation do |f| %>
-
-	<%= f.label :check_in %>
-	<%= f.date_field :in %><br/>
-
-	<%= f.label :check_out %>
-	<%= f.date_field :out %><br/>
-
-	<%= f.label :no_guest, "No of guests" %>
-	<%= f.number_field :no_guest %><br/>
-
-	<%= f.submit "Instant book" %>
+<%= form_tag("/listings/#{params[:id]}/book", method: "post") do %>
+	<%= date_select(:booking, :time_start) %>
+	<%= date_field(:booking, :time_end) %>
+	<%= number_field(:booking, :amount) %>
+	<%= submit_tag %>
 <% end %>

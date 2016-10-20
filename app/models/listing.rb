@@ -7,15 +7,17 @@ class Listing < ActiveRecord::Base
 	ROOM_TYPES = ['Entire place', 'Private room', 'Shared room']
 
 	after_save :update_tags
+	before_validation :add_schedule, if: "new_record?"
 
 	belongs_to :user
-	validates :name, :property_type, :room_type, :no_guest, :price, :min_stay, :address, presence: true
+	validates :name, :property_type, :room_type, :price, :min_stay, :address, :capacity, :schedule, presence: true
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
 	belongs_to :city
-
 	has_many :photos, dependent: :destroy
 	has_many :reservations
+
+	acts_as_bookable preset: :room
 
 	mount_uploaders :photos, PhotoUploader
 
@@ -53,5 +55,10 @@ class Listing < ActiveRecord::Base
 	      tagging = self.taggings.create(tag_id: tag.id, context: "rule")
 	    end
 	  end
+	end
+
+	def add_schedule
+		self.schedule = IceCube::Schedule.new(Date.today, duration: 1.day)
+    self.schedule.add_recurrence_rule IceCube::Rule.daily
 	end
 end

@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
 
-
-  resources :reservations
-  post '/reservations/create' => 'reservations#create', :as => :create_reservation
+  post '/listings/:id/book' => 'listings#book'
 
   resources :listings
   get 'static_pages/home'

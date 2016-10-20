@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020015703) do
+ActiveRecord::Schema.define(version: 20161020062825) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "acts_as_bookable_bookings", force: :cascade do |t|
+    t.integer  "bookable_id"
+    t.string   "bookable_type"
+    t.integer  "booker_id"
+    t.string   "booker_type"
+    t.integer  "amount"
+    t.text     "schedule"
+    t.datetime "time_start"
+    t.datetime "time_end"
+    t.datetime "time"
+    t.datetime "created_at"
+    t.integer  "price"
+  end
+
+  add_index "acts_as_bookable_bookings", ["bookable_type", "bookable_id"], name: "index_acts_as_bookable_bookings_bookable", using: :btree
+  add_index "acts_as_bookable_bookings", ["booker_type", "booker_id"], name: "index_acts_as_bookable_bookings_booker", using: :btree
 
   create_table "authentications", force: :cascade do |t|
     t.string   "uid"
@@ -38,30 +55,18 @@ ActiveRecord::Schema.define(version: 20161020015703) do
     t.text    "description"
     t.string  "property_type"
     t.string  "room_type"
-    t.integer "no_guest"
     t.integer "price"
     t.integer "min_stay"
     t.string  "address"
     t.integer "user_id"
     t.integer "city_id"
     t.json    "photos"
+    t.text    "schedule"
+    t.integer "capacity"
   end
 
   add_index "listings", ["city_id"], name: "index_listings_on_city_id", using: :btree
   add_index "listings", ["user_id"], name: "index_listings_on_user_id", using: :btree
-
-  create_table "reservations", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "listing_id"
-    t.date     "in"
-    t.date     "out"
-    t.string   "no_guest"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "reservations", ["listing_id"], name: "index_reservations_on_listing_id", using: :btree
-  add_index "reservations", ["user_id"], name: "index_reservations_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id"
@@ -94,8 +99,6 @@ ActiveRecord::Schema.define(version: 20161020015703) do
 
   add_foreign_key "listings", "cities"
   add_foreign_key "listings", "users"
-  add_foreign_key "reservations", "listings"
-  add_foreign_key "reservations", "users"
   add_foreign_key "taggings", "listings"
   add_foreign_key "taggings", "tags"
 end

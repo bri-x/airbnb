@@ -41,8 +41,8 @@
   </div>
 
   <div class="text-field">
-    <%= f.label :no_guest, "Number of guests", class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10"><%= f.number_field :no_guest, class: "form-control", min: "1", max: "30" %></div>
+    <%= f.label :capacity, "Number of guests", class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10"><%= f.number_field :capacity, class: "form-control", min: "1", max: "30" %></div>
   </div>
 
   <div class="text-field">
@@ -93,18 +93,6 @@
     <%= f.file_field :photos, multiple: true %>
   </div>
 
-
-  <div>
-    <% if @listing.photos.any? %>
-      Delete photos<br /><br />
-      <%= check_box_tag "select_all" %> Select all <br />
-      <% @listing.photos.each do |photo| %>
-        <%= check_box_tag photo.id, "delete" %>
-        <%= cl_image_tag(photo.image.thumb.url) %>
-        <br />
-      <% end %>
-    <% end %>
-  </div>
 
   <div class="actions">
     <%= f.submit %>
