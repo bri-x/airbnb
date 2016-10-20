@@ -1,6 +1,6 @@
 <%= form_tag("/listings/#{params[:id]}/book", method: "post") do %>
-	<%= date_select(:booking, :time_start) %>
+	<%= date_field(:booking, :time_start) %>
 	<%= date_field(:booking, :time_end) %>
 	<%= number_field(:booking, :amount) %>
-	<%= submit_tag %>
+	<%= submit_tag "Instant Book" %>
 <% end %>

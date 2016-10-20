@@ -62,8 +62,13 @@ class ListingsController < ApplicationController
   end
 
   def book
-    @listing.be_booked! current_user, booking_params
-    redirect_to current_user
+    begin
+      @listing.be_booked! current_user, booking_params
+    rescue => detail
+      redirect_to @listing, notice: detail.message
+    else
+      redirect_to current_user
+    end
   end
 
   private
@@ -79,7 +84,7 @@ class ListingsController < ApplicationController
 
     def booking_params
       hash = params.require(:booking).permit(:time_start, :time_end, :amount)
-      hash[:time_start] = Date.parse(hash[:time_start])
+      hash[:time_start] = Date.parse(hash[:time_start]) + 1.hour
       hash[:time_end] = Date.parse(hash[:time_end])
       hash[:amount] = hash[:amount].to_i
       return hash
