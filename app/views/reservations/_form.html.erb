@@ -1,0 +1,13 @@
+<%= form_for @reservation do |f| %>
+
+	<%= f.label :check_in %>
+	<%= f.date_field :in %><br/>
+
+	<%= f.label :check_out %>
+	<%= f.date_field :out %><br/>
+
+	<%= f.label :no_guest, "No of guests" %>
+	<%= f.number_field :no_guest %><br/>
+
+	<%= f.submit "Instant book" %>
+<% end %>

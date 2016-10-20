@@ -14,7 +14,10 @@ class Listing < ActiveRecord::Base
 	has_many :tags, through: :taggings
 	belongs_to :city
 
-	mount_uploaders :avatars, AvatarUploader
+	has_many :photos, dependent: :destroy
+	has_many :reservations
+
+	mount_uploaders :photos, PhotoUploader
 
 	attr_accessor :amenity_list
 	attr_accessor :rule_list
@@ -38,13 +41,17 @@ class Listing < ActiveRecord::Base
 	private
 	def update_tags
 		self.taggings.destroy_all
-		@amenity_list.each do |a|
+		if @amenity_list
+			@amenity_list.each do |a|
 			tag = Tag.find_or_create_by(name: a)
       tagging = self.taggings.create(tag_id: tag.id, context: "amenity")
+    	end
     end
-    @rule_list.each do |a|
-			tag = Tag.find_or_create_by(name: a)
-      tagging = self.taggings.create(tag_id: tag.id, context: "rule")
-    end
+    if @rule_list
+	    @rule_list.each do |a|
+				tag = Tag.find_or_create_by(name: a)
+	      tagging = self.taggings.create(tag_id: tag.id, context: "rule")
+	    end
+	  end
 	end
 end

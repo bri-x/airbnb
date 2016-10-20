@@ -11,16 +11,18 @@
 <p><%= @listing.amenity_list %></p>
 <p><%= @listing.rule_list %></p>
 <p>Hosted by:<%= @listing.user.name %></p>
-<p><%= image_tag (@listing.avatars[0].large.url) %></p>
+<% @listing.photos.each do |photo| %>
+	<p><%= image_tag (photo.large.url) %></p>
+<% end %>
 
 
 <% if @listing.user == current_user %>
+	The host can edit and delete <br/>
 	<%= link_to 'Edit', edit_listing_path(@listing) %> |
 	<%= link_to 'Back', listings_path %>
 	<%= link_to 'Delete', listing_path(@listing), method: :delete %>
 <% else %>
-	Check in <br/>
-	Check out <br/>
-	Guests <br/>
-	<button>Book now!</button>
+	Other users can book <br/>
+	<%= render :partial => "reservations/form" %>
+
 <% end %>

@@ -11,6 +11,7 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @reservation = current_user.reservations.new
   end
 
   # GET /listings/new
@@ -25,7 +26,6 @@ class ListingsController < ApplicationController
   # POST /listings
   # POST /listings.json
   def create
-    byebug
     @listing = current_user.listings.new(listing_params)
     @listing.amenity_list = params[:listing][:amenity]
     @listing.rule_list = params[:listing][:rule]
@@ -40,6 +40,8 @@ class ListingsController < ApplicationController
   # PATCH/PUT /listings/1.json
   def update
     respond_to do |format|
+      @listing.amenity_list = params[:listing][:amenity]
+      @listing.rule_list = params[:listing][:rule]
       if @listing.update(listing_params)
         format.html { redirect_to @listing, notice: 'Listing was successfully updated.' }
         format.json { render :show, status: :ok, location: @listing }
@@ -68,6 +70,6 @@ class ListingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
-      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :no_guest, :price, :min_stay, :address, :city_id, {avatars:[]})
+      return params.require(:listing).permit(:name, :description, :property_type, :room_type, :no_guest, :price, :min_stay, :address, :city_id, {photos:[]})
     end
 end
