@@ -7,7 +7,7 @@ class ReservationsController < ApplicationController
   	if @reservation.save
       redirect_to @reservation
     else
-      
+      render "listings/#{@listing.id}"
     end
   end
 
