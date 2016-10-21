@@ -63,10 +63,11 @@ class ListingsController < ApplicationController
 
   def book
     begin
-      @listing.be_booked! current_user, booking_params
+      @booking = @listing.be_booked! current_user, booking_params
     rescue => detail
       redirect_to @listing, notice: detail.message
     else
+      BookingMailer.booking_email(@booking).deliver_now
       redirect_to current_user
     end
   end

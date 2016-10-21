@@ -46,9 +46,12 @@ gem 'fog'
 
 gem 'acts_as_bookable'
 
+gem 'sidekiq'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  gem 'letter_opener'
 end
 
 group :development do
