@@ -67,7 +67,8 @@ class ListingsController < ApplicationController
     rescue => detail
       redirect_to @listing, notice: detail.message
     else
-      BookingMailer.booking_email(@booking).deliver_now
+      # BookingMailer.booking_email(@booking).deliver_later
+      SendEmailJob.perform_later(@booking)
       redirect_to current_user
     end
   end
