@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161020062825) do
+ActiveRecord::Schema.define(version: 20161021064258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,30 @@ ActiveRecord::Schema.define(version: 20161020062825) do
   add_index "listings", ["city_id"], name: "index_listings_on_city_id", using: :btree
   add_index "listings", ["user_id"], name: "index_listings_on_user_id", using: :btree
 
+  create_table "payments", force: :cascade do |t|
+    t.integer  "reservation_id"
+    t.string   "braintree_payment_id"
+    t.string   "status"
+    t.string   "fourdigit"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  add_index "payments", ["reservation_id"], name: "index_payments_on_reservation_id", using: :btree
+
+  create_table "reservations", force: :cascade do |t|
+    t.date     "time_start"
+    t.date     "time_end"
+    t.integer  "amount"
+    t.integer  "listing_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "reservations", ["listing_id"], name: "index_reservations_on_listing_id", using: :btree
+  add_index "reservations", ["user_id"], name: "index_reservations_on_user_id", using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer "tag_id"
     t.integer "listing_id"
@@ -99,6 +123,9 @@ ActiveRecord::Schema.define(version: 20161020062825) do
 
   add_foreign_key "listings", "cities"
   add_foreign_key "listings", "users"
+  add_foreign_key "payments", "reservations"
+  add_foreign_key "reservations", "listings"
+  add_foreign_key "reservations", "users"
   add_foreign_key "taggings", "listings"
   add_foreign_key "taggings", "tags"
 end

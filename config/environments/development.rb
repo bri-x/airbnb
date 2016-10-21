@@ -32,7 +32,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_options = {from: 'pairbnb685@gmail.com'}
+  config.action_mailer.default_options = {from: ENV['GMAIL_USERNAME']}
   #mailer setting ends
 
 

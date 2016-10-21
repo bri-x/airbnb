@@ -11,6 +11,7 @@ class ListingsController < ApplicationController
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @reservation = Reservation.new
   end
 
   # GET /listings/new
@@ -61,18 +62,6 @@ class ListingsController < ApplicationController
     end
   end
 
-  def book
-    begin
-      @booking = @listing.be_booked! current_user, booking_params
-    rescue => detail
-      redirect_to @listing, notice: detail.message
-    else
-      # BookingMailer.booking_email(@booking).deliver_later
-      SendEmailJob.perform_later(@booking)
-      redirect_to current_user
-    end
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_listing
@@ -82,13 +71,5 @@ class ListingsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def listing_params
       return params.require(:listing).permit(:name, :description, :property_type, :room_type, :capacity, :price, :min_stay, :address, :city_id, {photos:[]})
-    end
-
-    def booking_params
-      hash = params.require(:booking).permit(:time_start, :time_end, :amount)
-      hash[:time_start] = Date.parse(hash[:time_start]) + 1.hour
-      hash[:time_end] = Date.parse(hash[:time_end])
-      hash[:amount] = hash[:amount].to_i
-      return hash
     end
 end

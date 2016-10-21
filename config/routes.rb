@@ -1,8 +1,19 @@
 Rails.application.routes.draw do
 
-  post '/listings/:id/book' => 'listings#book'
+  get 'payments/new'
+
+  get 'payments/create'
+
+  get 'new/create'
+
+  resources :payments, only: [:create, :new]
 
   resources :listings
+
+  resources :listings do
+    resources :reservations
+  end
+
   get 'static_pages/home'
 
   get 'static_pages/about'

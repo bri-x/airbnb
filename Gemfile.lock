@@ -59,6 +59,8 @@ GEM
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
+    braintree (2.68.1)
+      builder (>= 2.0.0)
     builder (3.2.2)
     byebug (9.0.6)
     clearance (1.15.1)
@@ -349,6 +351,7 @@ DEPENDENCIES
   acts_as_bookable
   autoprefixer-rails
   bootstrap-sass (~> 3.3.7)
+  braintree
   byebug
   carrierwave!
   clearance

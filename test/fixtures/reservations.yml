@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  users_id: 
-  listings_id: 
-  in: 2016-10-19
-  out: 2016-10-19
+  time_start: 2016-10-21
+  time_end: 2016-10-21
+  amount: 1
+  listing_id: 
+  user_id: 
 
 two:
-  users_id: 
-  listings_id: 
-  in: 2016-10-19
-  out: 2016-10-19
+  time_start: 2016-10-21
+  time_end: 2016-10-21
+  amount: 1
+  listing_id: 
+  user_id: 
