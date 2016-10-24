@@ -1,4 +1,6 @@
 class Listing < ActiveRecord::Base
+
+	# constants
 	AMENITIES = ["Essentials", "Towels", "Soap", "Toilet paper", "Wifi", "TV", "Heat", "Air conditioning", "Breakfast, coffee, tea", "Workspace", "Iron", "Hair dryer"]
 
 	RULES = ["Smoking", "Pets", "House party"]
@@ -6,23 +8,26 @@ class Listing < ActiveRecord::Base
 	PROPERTY_TYPES = ['Apartment', 'House', 'Cabin', 'Villa', 'Castle']
 	ROOM_TYPES = ['Entire place', 'Private room', 'Shared room']
 
+	# callbacks
 	after_save :update_tags
-	before_validation :add_schedule, if: "new_record?"
 
+	# validations
+	validates :name, :property_type, :room_type, :price, :min_stay, :address, :capacity, presence: true
+
+	# relations
 	belongs_to :user
-	validates :name, :property_type, :room_type, :price, :min_stay, :address, :capacity, :schedule, presence: true
+	belongs_to :city
+	
 	has_many :taggings, dependent: :destroy
 	has_many :tags, through: :taggings
-	belongs_to :city
-	has_many :photos, dependent: :destroy
-	has_many :reservations
-
-	acts_as_bookable preset: :room
-
+	
 	mount_uploaders :photos, PhotoUploader
 
-	attr_accessor :amenity_list
-	attr_accessor :rule_list
+	has_many :reservations
+	has_many :validities
+	
+	attr_writer :amenity_list
+	attr_writer :rule_list
 
 	def amenity_list
 		if @amenity_list
@@ -55,10 +60,5 @@ class Listing < ActiveRecord::Base
 	      tagging = self.taggings.create(tag_id: tag.id, context: "rule")
 	    end
 	  end
-	end
-
-	def add_schedule
-		self.schedule = IceCube::Schedule.new(Date.today, duration: 1.day)
-    self.schedule.add_recurrence_rule IceCube::Rule.daily
 	end
 end

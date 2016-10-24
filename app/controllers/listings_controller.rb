@@ -1,6 +1,7 @@
 class ListingsController < ApplicationController
 
-  before_action :set_listing, only: [:show, :edit, :update, :destroy, :book]
+  before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :require_login, only: [:new, :edit]
 
   # GET /listings
   # GET /listings.json

@@ -1,6 +1,16 @@
-<%= form_tag("/listings/#{params[:id]}/reservations", method: "post") do %>
-	<%= date_field(:reservation, :time_start) %>
-	<%= date_field(:reservation, :time_end) %>
-	<%= number_field(:reservation, :amount) %>
-	<%= submit_tag "Instant Book" %>
+<%= form_for [@listing, @reservation] do |f| %>
+	<%= f.date_field(:date_start) %>
+	<%= f.date_field(:date_end) %>
+	<%= f.number_field(:amount) %>
+	<%= f.submit "Instant Book" %>
+
+	<% if @reservation.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @reservation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 <% end %>

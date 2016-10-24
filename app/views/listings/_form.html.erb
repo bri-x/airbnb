@@ -63,7 +63,7 @@
   <div class="select-field">
     <%= f.label :city, class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-    <%= f.select :city_id, City.all.collect {|p| [ "#{p.name}, #{p.state}, #{p.country}", p.id ] }, class: "form-control" %>
+    <%= f.select :city_id, City.all.collect {|p| [ "#{p.name}, #{p.country}", p.id ] }, class: "form-control" %>
     </div>
   </div>
 
@@ -71,7 +71,7 @@
   <%= f.label :amenities, class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
     <% Listing::AMENITIES.each do |a| %>
-    <%= check_box_tag 'listing[amenity][]', a %>
+    <%= check_box_tag 'listing[amenity][]', a, @listing.amenity_list.include?(a) %>
     <%= label_tag "amenity_#{a.tr(' ', '')}", a %>
     <% end %>
     
@@ -81,9 +81,9 @@
   <div class="text-field">
   <%= f.label :rules, class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-    <% Listing::RULES.each do |a| %>
-    <%= check_box_tag 'listing[rule][]', a %>
-    <%= label_tag "rule_#{a.tr(' ', '')}", "Allow #{a.downcase}" %><br/>
+    <% Listing::RULES.each do |rule| %>
+    <%= check_box_tag 'listing[rule][]', rule, @listing.rule_list.include?(rule) %>
+    <%= label_tag "rule_#{rule.tr(' ', '')}", "Allow #{rule.downcase}" %><br/>
     <% end %>
     </div>
   </div>

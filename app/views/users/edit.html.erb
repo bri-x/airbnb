@@ -29,3 +29,11 @@
   <% end %>
 
 </div>
+
+<%= button_to 'Delete this account', user_path, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
+
+<%= form_for :password, url: passwords_path do |form| %>
+    <%= form.hidden_field :email, value: current_user.email %>
+    <%= form.submit %>
+<% end %>
+

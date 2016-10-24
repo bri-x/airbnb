@@ -11,27 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021064258) do
+ActiveRecord::Schema.define(version: 20161021154732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "acts_as_bookable_bookings", force: :cascade do |t|
-    t.integer  "bookable_id"
-    t.string   "bookable_type"
-    t.integer  "booker_id"
-    t.string   "booker_type"
-    t.integer  "amount"
-    t.text     "schedule"
-    t.datetime "time_start"
-    t.datetime "time_end"
-    t.datetime "time"
-    t.datetime "created_at"
-    t.integer  "price"
-  end
-
-  add_index "acts_as_bookable_bookings", ["bookable_type", "bookable_id"], name: "index_acts_as_bookable_bookings_bookable", using: :btree
-  add_index "acts_as_bookable_bookings", ["booker_type", "booker_id"], name: "index_acts_as_bookable_bookings_booker", using: :btree
 
   create_table "authentications", force: :cascade do |t|
     t.string   "uid"
@@ -44,25 +27,25 @@ ActiveRecord::Schema.define(version: 20161021064258) do
 
   create_table "cities", force: :cascade do |t|
     t.string   "name"
-    t.string   "state"
     t.string   "country"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "listings", force: :cascade do |t|
-    t.string  "name"
-    t.text    "description"
-    t.string  "property_type"
-    t.string  "room_type"
-    t.integer "price"
-    t.integer "min_stay"
-    t.string  "address"
-    t.integer "user_id"
-    t.integer "city_id"
-    t.json    "photos"
-    t.text    "schedule"
-    t.integer "capacity"
+    t.string   "name"
+    t.text     "description"
+    t.string   "property_type"
+    t.string   "room_type"
+    t.integer  "capacity"
+    t.integer  "price"
+    t.integer  "min_stay"
+    t.string   "address"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "city_id"
+    t.json     "photos"
   end
 
   add_index "listings", ["city_id"], name: "index_listings_on_city_id", using: :btree
@@ -80,22 +63,26 @@ ActiveRecord::Schema.define(version: 20161021064258) do
   add_index "payments", ["reservation_id"], name: "index_payments_on_reservation_id", using: :btree
 
   create_table "reservations", force: :cascade do |t|
-    t.date     "time_start"
-    t.date     "time_end"
+    t.date     "date_start"
+    t.date     "date_end"
     t.integer  "amount"
+    t.integer  "total_price"
     t.integer  "listing_id"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "paid",        default: false
   end
 
   add_index "reservations", ["listing_id"], name: "index_reservations_on_listing_id", using: :btree
   add_index "reservations", ["user_id"], name: "index_reservations_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id"
-    t.integer "listing_id"
-    t.string  "context"
+    t.integer  "tag_id"
+    t.integer  "listing_id"
+    t.string   "context"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "taggings", ["listing_id"], name: "index_taggings_on_listing_id", using: :btree
@@ -110,16 +97,27 @@ ActiveRecord::Schema.define(version: 20161021064258) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "encrypted_password", limit: 128
-    t.string "confirmation_token", limit: 128
-    t.string "remember_token",     limit: 128
-    t.string "avatar"
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "encrypted_password", limit: 128
+    t.string   "confirmation_token", limit: 128
+    t.string   "remember_token",     limit: 128
+    t.string   "avatar"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+
+  create_table "validities", force: :cascade do |t|
+    t.integer  "listing_id"
+    t.date     "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "validities", ["date", "listing_id"], name: "index_validities_on_date_and_listing_id", unique: true, using: :btree
 
   add_foreign_key "listings", "cities"
   add_foreign_key "listings", "users"

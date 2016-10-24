@@ -1,6 +1,6 @@
 <h2>Payment Page</h2>
 
-<%= form_for(@payment) do |f| %>
+<%= form_for @payment do |f| %>
 
   <div class="field">
     <h2><%= @reservation.listing.name %></h2>
@@ -8,12 +8,12 @@
 
   <div class="lead">
     <%= f.label :from %><br>
-    <%= @reservation.time_start %>
+    <%= @reservation.date_start %>
   </div>
 
   <div class="lead">
     <%= f.label :until %><br>
-    <%= @reservation.time_end %>
+    <%= @reservation.date_end %>
   </div>
 
   <div class="lead">

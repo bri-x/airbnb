@@ -8,8 +8,10 @@ class UsersController < Clearance::UsersController
   end
 
   def update
-    if current_user.update(user_params_revised)
-      byebug
+    working_params = user_params_revised
+    working_params.delete(:password)
+
+    if current_user.update(working_params)
       if params[:user][:remove_avatar] == 1
         current_user.remove_avatar!
         current_user.save
@@ -21,8 +23,10 @@ class UsersController < Clearance::UsersController
   end
 
   def destroy
-    current_user.destroy
-    redirect_to sign_out_path
+    @user = current_user
+    sign_out
+    @user.destroy
+    redirect_to root_path
   end
 
 

@@ -1,24 +1,18 @@
 Rails.application.routes.draw do
 
-  get 'payments/new'
-
-  get 'payments/create'
-
-  get 'new/create'
-
-  resources :payments, only: [:create, :new]
-
   resources :listings
 
   resources :listings do
     resources :reservations
   end
 
+  resources :payments, only: [:create, :new]
+
   get 'static_pages/home'
 
   get 'static_pages/about'
 
-  resources :passwords, controller: "clearance/passwords", only: [:create, :new]
+  resources :passwords, controller: "passwords", only: [:create, :new]
   resource :session, controller: "clearance/sessions", only: [:create]
 
   resources :users, controller: "users", only: [:create] do

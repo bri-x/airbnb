@@ -1,7 +1,7 @@
 class Tagging < ActiveRecord::Base
 	belongs_to :tag
 	belongs_to :listing
-	after_save :add_tagging_count
+	after_create :add_tagging_count
 	before_destroy :decrease_tagging_count
 
 	private

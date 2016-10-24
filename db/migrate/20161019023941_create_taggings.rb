@@ -4,6 +4,8 @@ class CreateTaggings < ActiveRecord::Migration
       t.references :tag, index: true, foreign_key: true
       t.references :listing, index: true, foreign_key: true
       t.string :context
+
+      t.timestamps null: false
     end
 
     add_index :taggings, [:tag_id, :context]

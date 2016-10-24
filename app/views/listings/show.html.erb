@@ -7,7 +7,7 @@
 <p>RM<%= @listing.price %> per night</p>
 <p>Minimum stay: <%= @listing.min_stay %> night</p>
 <p><%= @listing.address %></p>
-<p><%= @listing.city.name + ", " + @listing.city.state + ", " + @listing.city.country %></p>
+<p><%= @listing.city.name + ", " + @listing.city.country %></p>
 <p><%= @listing.amenity_list %></p>
 <p><%= @listing.rule_list %></p>
 <p>Hosted by:<%= @listing.user.name %></p>
@@ -17,12 +17,10 @@
 
 
 <% if @listing.user == current_user %>
-	The host can edit and delete <br/>
+	<%= link_to 'Back', listings_path %> | 
 	<%= link_to 'Edit', edit_listing_path(@listing) %> |
-	<%= link_to 'Back', listings_path %>
 	<%= link_to 'Delete', listing_path(@listing), method: :delete %>
 <% else %>
 	Other users can book <br/>
 	<%= render :partial => "reservations/form" %>
-
 <% end %>
