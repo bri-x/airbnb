@@ -18,15 +18,13 @@ class Reservation < ActiveRecord::Base
     self.update(paid: true)
   end
 
-  def add_to_validities
-    id = self.listing_id
-    dates = (self.date_start..self.date_end).map { |d| d }
-    dates.pop
+  def add_unavailable_dates
+    byebug
+    set_listing_dates
+    @listing.unavailable_dates += @dates
     begin
       ActiveRecord::Base.transaction do
-        dates.each do
-         |d| Validity.create!(listing_id: id, date: d )
-        end
+        @listing.save if @listing.unavailable_dates.uniq.count == @listing.unavailable_dates.count
       end
     rescue Exception => e
       return false
@@ -35,29 +33,31 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def remove_validities
-    Validity.where("date >= ? AND date < ? AND listing_id = ? ", self.date_start, self.date_end, self.listing_id).destroy_all
+  def remove_unavailable_dates
+    set_listing_dates
+    @listing.unavailable_dates -= @dates
+    @listing.save
   end
 
   private
 
   def valid_amount?
-  	if self.amount > self.listing.capacity
-  		self.errors[:listing] << " cannot accomodate all guests"
-  	end
+  	errors.add(:listing, 'cannot accomodate all guests') unless self.amount <= self.listing.capacity
   end
 
   def valid_stay?
   	stay = calculate_days
-  	if stay < self.listing.min_stay
-  		self.errors[:listing] << "has minimum stay of #{self.listing.min_stay} days"
-  	end
+    errors.add(:listing, "has minimum stay of #{self.listing.min_stay} days") unless stay >= self.listing.min_stay
   end
 
   def valid_days?
-  	result = Validity.where("date >= ? AND date < ? AND listing_id = ? ", self.date_start, self.date_end, self.listing_id)
-  	if result.any?
-  		self.errors[:listing] << "is not available on those dates"
-  	end
+  	if Listing.where("'#{self.date_end}' > ANY (unavailable_dates) AND '#{self.date_end}' <= ANY (unavailable_dates)").any?
+      errors.add(:listing, "is not available on those dates") 
+    end
+  end
+
+  def set_listing_dates
+    @listing = self.listing
+    @dates = (self.date_start..self.date_end).map { |d| d }
   end
 end

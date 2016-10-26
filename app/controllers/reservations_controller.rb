@@ -6,6 +6,7 @@ class ReservationsController < ApplicationController
   end
 
   def create
+    byebug
     @listing = Listing.find(params[:listing_id])
     @reservation = @listing.reservations.new(reservation_params)
     @reservation.user_id = current_user.id

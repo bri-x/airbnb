@@ -1,30 +1,36 @@
-<p id="notice"><%= notice %></p>
+<div class="title">
+  <h1>Listings</h1>
+</div>
 
-<h1>Listings</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @listings.each do |listing| %>
+<div class="listing-content">
+  <% @listings.each do |listing| %>
+    <div class="listing">
+    <div class="listing-photo">
+      PHOTO HERE
+    </div>
+    <table class="listing-caption">
+      <tr><td colspan="2">
+        <%= link_to listing.name, listing %>
+      </td></tr>
       <tr>
-        <td><h3><%= link_to listing.name, listing %></h3></td>
+        <td>RM<%= listing.price %> per night</td>
+        <td><%= listing.room_type %></td>
       </tr>
+      
       <tr>
-        <td>put photo here</td>
+        <td colspan="2">
+        <% if listing.user == current_user %>
+          <%= link_to 'Edit', edit_listing_path(listing) %> | 
+          <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% else %>
+          <br/>
+          <% end %>
+        </td>
       </tr>
-      <% if listing.user == current_user %>
-      <tr>
-        <td><%= link_to 'Edit', edit_listing_path(listing) %>
-          <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </table>
+    </div>
+  <% end %>
+</div>
 
-<br>
+<center><%= will_paginate @listings %></center>

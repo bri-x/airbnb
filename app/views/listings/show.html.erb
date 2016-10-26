@@ -1,4 +1,38 @@
 <p id="notice"><%= notice %></p>
+
+<% if @listing.photos.present? %>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <%= image_tag @listing.photos[0].medium.url %>
+    </div>
+
+    <div class="item">
+      <%= image_tag @listing.photos[1].medium.url %>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+<% end %>
+
 <h1><%= @listing.name %></h1>
 <p><%= @listing.description %></p>
 <p><%= @listing.property_type %></p>
@@ -11,10 +45,6 @@
 <p><%= @listing.amenity_list %></p>
 <p><%= @listing.rule_list %></p>
 <p>Hosted by:<%= @listing.user.name %></p>
-<% @listing.photos.each do |photo| %>
-	<p><%= image_tag (photo.large.url) %></p>
-<% end %>
-
 
 <% if @listing.user == current_user %>
 	<%= link_to 'Back', listings_path %> | 
@@ -24,3 +54,8 @@
 	Other users can book <br/>
 	<%= render :partial => "reservations/form" %>
 <% end %>
+
+
+<script>
+	var disableddates = <%= @unavailable_dates.inspect.html_safe %>;
+</script>

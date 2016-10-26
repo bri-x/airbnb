@@ -1,13 +1,21 @@
 class Listing < ActiveRecord::Base
+	include Filterable
 
 	# constants
 	AMENITIES = ["Essentials", "Towels", "Soap", "Toilet paper", "Wifi", "TV", "Heat", "Air conditioning", "Breakfast, coffee, tea", "Workspace", "Iron", "Hair dryer"]
-
 	RULES = ["Smoking", "Pets", "House party"]
-
 	PROPERTY_TYPES = ['Apartment', 'House', 'Cabin', 'Villa', 'Castle']
 	ROOM_TYPES = ['Entire place', 'Private room', 'Shared room']
+	RANGES = ["100", "100-250", "250-500", "500-1000", "1000-2500", ">2500"]
 
+	# scopes
+	scope :location, ->(q) { includes(:city).where('cities.name ILIKE :query OR cities.country ILIKE :query', query: q).references(:cities) }
+	scope :price, -> (ranges) { where(price: ranges) }
+	scope :date, ->(dates) { where.not("'#{dates[:start]}' > ANY (unavailable_dates) AND '#{dates[:end]}' <= ANY (unavailable_dates)").where("min_stay <= ?", (Date.parse(date[:end]) - Date.parse(date[:start])).to_i) }
+	scope :capacity, ->(q) { where(capacity: q)}
+	scope :property_type, ->(types) { where(property_type: types) }
+	scope :room_type, ->(types) { where(room_type: types) }
+	
 	# callbacks
 	after_save :update_tags
 
@@ -25,7 +33,7 @@ class Listing < ActiveRecord::Base
 
 	has_many :reservations
 	has_many :validities
-	
+
 	attr_writer :amenity_list
 	attr_writer :rule_list
 

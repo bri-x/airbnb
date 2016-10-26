@@ -12,8 +12,158 @@
  *
  *= require_tree .
  *= require_self
+ *= require jquery-ui
  */
-
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+$feather: #77C9D4;
+$marine: #57BC90;
+$forest: #015248;
+$darkgrey: #35353F;
+$ligthgrey: #A5A5AF;
+
+body * {
+	font-family: 'Inconsolata', monospace;
+  
+  h1, h2, h3 {
+    font-family: 'Montserrat', sans-serif;
+  }
+}
+
+/* ------------------------ navbar ------------------------ */
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 30px;
+  padding-bottom: 15px;
+  text-transform: uppercase;
+
+  .nav-header {
+    flex-grow: 8;
+    display: flex;
+    direction: row;
+    align-items: center;
+  }
+
+  .nav-collapse {
+    flex-grow: 4;
+  }
+  
+
+  .nav-brand {
+    color: $forest;
+    font-size: 24px;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    padding-right: 8px;
+  }
+
+  .nav-search-icon {
+    border-right: 1px solid $forest;
+    padding: 0px 8px;
+    opacity: 0.5;
+    transform: scale(-1, 1);
+  }
+
+  .nav-search {
+    flex-grow: 5;
+    display: inline-block;
+
+    input[type="text"] {
+      border: none;
+      width: 90%;
+      font-size: 16px;
+    };
+    input[type=submit] {
+    display: none;
+    };
+  }
+
+  .nav-collapse {
+    width: auto;
+
+    .nav-right {
+      float: right;
+      position: relative;
+      top: 30px;
+
+      li {
+        float: left;
+        width: auto;
+        padding: 0px 10px;
+        list-style: none;
+        color: $darkgrey;
+        font-weight: bold;
+
+        a {
+          text-decoration: none;
+        };
+      } // end of li
+
+      /* The container <div> - needed to position the dropdown content */
+      .dropdown {
+          position: relative;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 5px;
+        z-index:1000;
+        background-color: white;
+        min-width: 135px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+        div {
+          padding: 5px 10px;
+          text-align: right;
+        };
+
+        .separator {
+          width: 95%;
+          height: 1px;
+          margin: 5px 5px 0px 5px;
+          padding: 0px;
+          border-top: 1px solid $ligthgrey;
+        }
+
+        input[type="submit"] {
+         background:none!important;
+         border:none; 
+         padding:0!important;
+         font: inherit;
+         text-transform: uppercase;
+         /*border is optional*/
+         cursor: pointer;
+        }
+      };
+
+    }; // end of nav-right
+  } // end of nav-collapse
+
+
+}
+
+/* ------------------------  ------------------------ */
+
+.avatar-small {
+  border-radius: 40px;
+  width: 40px;
+  height: 40px;
+  background-color: $marine;
+  display: inline-block;
+  position: relative;
+  top: -10px;
+  
+  span {
+    font-size: 20px;
+    position: relative;
+    top: 25%;
+    left: 30%;
+    color: white;
+  }
+}

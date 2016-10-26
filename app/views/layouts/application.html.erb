@@ -6,13 +6,14 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat" rel="stylesheet"> 
 </head>
 <body>
 	<% flash.each do |key, value| %>
     <div class="alert alert-<%= key %>"><%= value %></div>
   <% end %>
 	<%= render 'layouts/navbar' %>
-	<div class="container-fluid">
+	<div>
 		<%= yield %>
 	</div>
 </body>

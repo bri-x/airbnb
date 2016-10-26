@@ -1,6 +1,6 @@
 <%= form_for [@listing, @reservation] do |f| %>
-	<%= f.date_field(:date_start) %>
-	<%= f.date_field(:date_end) %>
+	<%= f.date_field :date_start, id:"from" %>
+	<%= f.date_field :date_end, id:"to" %>
 	<%= f.number_field(:amount) %>
 	<%= f.submit "Instant Book" %>
 

@@ -2,6 +2,7 @@ class PaymentsController < ApplicationController
 	before_action :require_login
 
   def create
+    byebug
   	amount = params[:payment][:total_price]
     nonce = params[:payment_method_nonce]
     @reservation = Reservation.find(params[:payment][:reservation_id])
@@ -14,7 +15,7 @@ class PaymentsController < ApplicationController
     end
 
     # checks date in database
-    if @reservation.add_to_validities 
+    if @reservation.add_unavailable_dates 
       
       @result = Braintree::Transaction.sale(
         amount: amount,
@@ -30,7 +31,7 @@ class PaymentsController < ApplicationController
         redirect_to listing_reservation_path(listing_id: @reservation.listing_id, id: @reservation), notice: "Congratulations! Your transaction is successful!" and return
       else
         flash[:alert] = "Something went wrong while processing your transaction. Please try again!"
-        @reservation.remove_validities
+        @reservation.remove_unavailable_dates
         @client_token = Braintree::ClientToken.generate
         render :new and return
       end

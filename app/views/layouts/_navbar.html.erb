@@ -1,37 +1,58 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">PairBnB</a>
+<nav>
+  <div class="nav-header">
+    <a class="nav-brand" href="/">PairBnB</a>
+    <div class="nav-search-icon"><%= image_tag 'search.png', size:'25x25' %></div>
+    <div class="nav-search">
+      <%= form_tag '/search', method: :get do %>
+        <%= text_field_tag :location, params[:location], placeholder:"Where do you wanna go?" %>
+        <%= submit_tag 'Search', class: 'btn btn-primary' %>
+      <% end %>
     </div>
+  </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "All listings", listings_path %></li>
-        <li><%= link_to "About", "#" %></li>
-        <li><%= link_to "Help", "#" %></li>
-        <% if signed_in? %>
-          <li><%= link_to "Become a host", new_listing_path %></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Signed in as: <%= current_user.email %> <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "Profile", user_path(current_user) %></a></li>
-              <li><%= link_to "Edit account", edit_user_path(current_user) %></a></li>
-              <li role="separator" class="divider"></li>
-              <li><%= button_to 'Sign out', sign_out_path, method: :delete, class: "btn btn-link" %></li>
-            </ul>
+  <div class="nav-collapse">
+    <ul class="nav-right">
+      <li><%= link_to "Explore", listings_path %></li>
+      <li><%= link_to "About", "#" %></li>
+
+      <% if signed_in? %>
+        <li><%= link_to "Become a host", new_listing_path %></li>
+<!--         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> -->
+          <li class="dropdown"><a href="#" class="droplink" onclick="dropdownToggle()">
+            <% if current_user.avatar_url %>
+              <%= image_tag current_user.avatar_url, class: "avatar-small"  %>
+            <% else %>
+              <div class="avatar-small"><span><%= current_user.name[0] %></span></div>
+            <% end %>
+          </a>
+
+          <div class="dropdown-content" id="myDropdown">
+            <div><%= link_to "Profile", user_path(current_user) %></div>
+            <div><%= link_to "Edit account", edit_user_path(current_user) %></div>
+            <div class="separator"></div>
+            <div><%= button_to 'Sign out', sign_out_path, method: :delete, class: "btn btn-link" %></div>
+          </div>
+
           </li>
+
         <% else %>
           <li><%= link_to 'Sign in', sign_in_path %></li>
         <% end %>
       </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
+
+
+    </div>
+  </div> <!-- header -->
 </nav>
+
+<script type="text/javascript">
+  function dropdownToggle() {
+    if ($(".dropdown-content").is(":visible")) {
+      $(".dropdown-content").toggle(false)
+    }
+    else {
+    $(".dropdown-content").toggle(true);
+    }
+  };
+</script>

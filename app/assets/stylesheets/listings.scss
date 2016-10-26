@@ -1,3 +1,72 @@
-// Place all the styles related to the listings controller here.
+// Place all the styles related to the listing controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$feather: #77C9D4;
+$marine: #57BC90;
+$forest: #015248;
+$darkgrey: #35353F;
+$ligthgrey: #A5A5AF;
+
+.title {
+	background: linear-gradient(right top, $feather, $forest);
+	width: 100vw;
+	height: 25vh;
+	padding-top: 100px;
+	padding-left: 25px;
+	h1 {
+		color: white;
+		font-size: 60px;
+	};
+};
+
+.listing-content {
+	overflow: hidden;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.listing {
+	width: 32vw;
+	text-align: center;
+}
+
+.listing-photo {
+	height: 18vw;
+	overflow: hidden;
+	background-color: $ligthgrey;
+
+	img {
+		max-width: 100%;
+	};
+
+}
+
+.listing-caption {
+	width: 32vw;
+	padding: 5px;
+
+	td {
+		color: $darkgrey;
+	};
+
+	a { 
+    font-size: 20px;
+		font-family: 'Montserrat', sans-serif;
+		text-transform: uppercase;
+		color: $forest;
+
+    text-decoration: none; 
+    text-overflow: ellipsis; 
+    display: block; 
+    overflow: hidden; 
+    white-space: nowrap;
+    width: 30vw; 
+	};
+
+	a:visited {
+		color: $marine;
+	}
+}
+

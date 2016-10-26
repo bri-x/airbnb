@@ -1,0 +1,120 @@
+<div class="search-filter">
+    <table>
+  <%= form_tag '/search', method: :get do %>
+  <tr>
+    <td class="table-label">Location</td>
+    <td>
+    <%= text_field_tag :location, params[:location], placeholder: 'location' %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="table-label">Date</td>
+    <td>
+    <%= date_field_tag 'date[start]', params[:date][:start], placeholder:'Check-in date', class:"selector" %>
+    <%= date_field_tag 'date[end]', params[:date][:end], placeholder:'Check-out date', class:"selector" %>
+    <%= number_field_tag ('capacity') %>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="table-label">Price</td>
+    <td>
+    <div class="table-checkbox">
+    <% Listing::RANGES.each do |a| %>
+    <div>
+    <%= check_box_tag 'price[]', a %>
+    <%= label_tag "price_#{a.tr(' ', '')}", a %>
+    </div>
+    <% end %>
+    </div>
+    </td>
+    </tr>
+
+    <tr>
+    <td class="table-label">Room type</td>
+    <td>
+    <div class="table-checkbox">
+    <% Listing::ROOM_TYPES.each do |a| %>
+    <div>
+    <%= check_box_tag 'room_type[]', a %>
+    <%= label_tag "room_type_#{a.tr(' ', '')}", a %>
+    </div>
+    <% end %>
+    </div>
+    </td>
+    </tr>
+
+    <tr>
+    <td class="table-label">Property type</td>
+    <td>
+    <div class="table-checkbox">
+    <% Listing::PROPERTY_TYPES.each do |a| %>
+    <div>
+    <%= check_box_tag 'property_type[]', a %>
+    <%= label_tag "property_type_#{a.tr(' ', '')}", a %>
+    </div>
+    <% end %>
+    </div>
+    </td>
+    </tr>
+
+    <tr>
+    <td colspan="2" style="text-align: center">
+    <%= submit_tag 'search', class: 'btn btn-primary' %>
+    </td>
+    </tr>
+  <% end %>
+  </table>
+</div>
+
+<h1><%= @results.count %> search results</h1>
+<div class="listing-content">
+<% @results.each do |listing| %>
+    <div class="listing">
+    <div class="listing-photo">
+      PHOTO HERE
+    </div>
+    <table class="listing-caption">
+      <tr><td colspan="2">
+        <%= link_to listing.name, listing %>
+      </td></tr>
+      <tr>
+        <td>RM<%= listing.price %> per night</td>
+        <td><%= listing.room_type %></td>
+      </tr>
+      
+      <tr>
+        <td colspan="2">
+        <% if listing.user == current_user %>
+          <%= link_to 'Edit', edit_listing_path(listing) %> | 
+          <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% else %>
+          <br/>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+    </div>
+  <% end %>
+</div>
+
+<%= will_paginate @results %>
+
+<% if @similar %>
+<h1>Similar results</h1>
+<h2><%= @similar.count %> results</h2>
+<% @similar.each do |result| %>
+<h3><%= result.name %></h3>
+<p><%= result.property_type %></p>
+<p><%= result.room_type %></p>
+<p><%= result.capacity %> guest</p>
+<p>RM<%= result.price %> per night</p>
+<p>Minimum stay: <%= result.min_stay %> night</p>
+<p><%= result.address %></p>
+<p><%= result.city.name + ", " + result.city.country %></p>
+<p><%= result.amenity_list %></p>
+<p><%= result.rule_list %></p>
+<% end %>
+<% end %>
+

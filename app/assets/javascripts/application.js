@@ -12,6 +12,59 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require jquery-ui
+//= require jquery.turbolinks
 //= require bootstrap-sprockets
 //= require_tree .
+
+
+var disableddates = (typeof disableddates === 'undefined') ? [] : disableddates;
+var d = new Date();
+var date = ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
+var today = d.getFullYear() + '-' + date;
+var nextYear = (d.getFullYear()+1) + '-' + date;
+
+function DisableSpecificDates(date) {
+    var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
+    return [disableddates.indexOf(string) == -1];
+  };
+
+  $( function() {
+    var dateFormat = "mm/dd/yy",
+
+      from = $( "#from" )
+        .datepicker({
+        	beforeShowDay: DisableSpecificDates,
+        	minDate: new Date(today),
+					maxDate: new Date(nextYear),
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 2
+        })
+        .on( "change", function() {
+          to.datepicker( "option", "minDate", getDate( this ) );
+        }),
+      to = $( "#to" ).datepicker({
+        beforeShowDay: DisableSpecificDates,
+        minDate: new Date(today),
+				maxDate: new Date(nextYear),
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 2
+      })
+      .on( "change", function() {
+        from.datepicker( "option", "maxDate", getDate( this ) );
+      });
+ 
+    function getDate( element ) {
+      var date;
+      try {
+        date = $.datepicker.parseDate( dateFormat, element.value );
+      } catch( error ) {
+        date = null;
+      }
+ 
+      return date;
+    };
+
+  });

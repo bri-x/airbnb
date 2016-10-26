@@ -1,17 +1,18 @@
 class ListingsController < ApplicationController
-
+  
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
   before_action :require_login, only: [:new, :edit]
 
   # GET /listings
   # GET /listings.json
   def index
-    @listings = Listing.all
+    @listings = Listing.all.paginate(:page => params[:page])
   end
 
   # GET /listings/1
   # GET /listings/1.json
   def show
+    @unavailable_dates = @listing.unavailable_dates.map { |a| a.strftime('%d-%m-%Y')}
     @reservation = Reservation.new
   end
 

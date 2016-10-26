@@ -1,0 +1,50 @@
+// Place all the styles related to the search controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$feather: #77C9D4;
+$marine: #57BC90;
+$forest: #015248;
+$darkgrey: #35353F;
+$ligthgrey: #A5A5AF;
+
+.search-filter {
+	display: flex;
+	justify-content: center;
+	padding: 20px 0px;
+	background: #C4E0E5;
+
+	table {
+		max-width: 800px;
+	};
+
+	td.table-label {
+			padding: 5px 10px;
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 14px;
+	};
+
+	input[type="text"] {
+		width: 97%;
+	};
+
+	.table-checkbox {
+		display: flex;
+		justify-content: space-between;
+	};
+
+	input[type="submit"] {
+		background-color: $forest;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+		font-family: 'Montserrat', sans-serif;
+		margin: 10px;
+	}
+}

@@ -1,15 +1,60 @@
-<div class="jumbotron">
-  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-  <h1>Welcome to PairBnB</h1>
-  <p>We're like AirBnB, but worse.</p>
-	<div class="row">
-   	<div class="col-lg-12">
-	    <div class="input-group input-group-lg">
-	      <input type="text" class="form-control input-lg" id="search" placeholder="Where do you want to go?">
-	      <span class="input-group-btn">
-	        <button class="btn btn-primary btn-lg" type="submit">Search</button>
-	      </span>
-	    </div> <!-- input group -->
-	  </div> <!-- col -->
-	</div> <!-- row -->
+<div class="home-container">
+<div class="home-search-box">
+  <div class="outer-wrapper">
+    <div class="wrapper">
+    <h1>Experience a city like a local</h1>
+    <p>Feel at home, wherever you go</p>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <%= form_tag '/search', method: :get do %>
+          <%= text_field_tag :location, params[:location], placeholder:"Where to go?" %>
+          <%= date_field_tag 'date[start]', params[:date], placeholder:'Check-in date', id:"from" %>
+          <%= date_field_tag 'date[end]', params[:date], placeholder:'Check-out date', id:"to" %>
+          <%= number_field_tag :capacity, params[:capacity], placeholder:'No of guest(s)' %>
+          <%= submit_tag 'Search', class: 'btn btn-primary' %>
+        <% end %>
+      </div> <!-- col -->
+    </div> <!-- row -->
+    </div> <!-- wrapper -->
+  </div>
+</div>
+
+
+
+  <div class="explore">
+    <div class="col-4">
+      <a href='/listings/'><h1>Explore the world ><br/><br/></h1></a>
+    </div>
+    <div class="col-8">
+      <a href="/search?&amp;location=new+york&amp;commit=Search"><div class="quarter overlay-text">
+        NEW YORK
+      </div>
+      </a>
+
+      <div class="three-quarter">
+        <a href="/search?&amp;location=tokyo&amp;commit=Search"><div class="half-1 overlay-text">
+          TOKYO
+        </div>
+        </a>
+        <a href="/search?&amp;location=paris&amp;commit=Search"><div class="half-2 overlay-text">
+          PARIS
+        </div>
+        </a>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="host">
+    <div class="host-inner">
+      <h1>Earn extra income, at home</h1>
+      <%= link_to "Become a host now >", new_listing_path %>
+    </div>
+  </div>
+
+	    
+
+</div>
 </div>

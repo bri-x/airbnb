@@ -9,7 +9,10 @@ class CreateListings < ActiveRecord::Migration
       t.integer :price
       t.integer :min_stay
       t.string :address
+      t.date :unavailable_dates, array: true, default: [], uniqueness: true, index: true
+
       t.belongs_to :user, index: true, foreign_key: true
+
       t.timestamps null: false
     end
   end

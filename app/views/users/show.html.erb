@@ -15,8 +15,8 @@
 <% if @user == current_user %>
 	<h2>My bookings</h2>
 	<% @user.reservations.each do |booking| %>
-		<h3><%= Listing.find(booking.bookable_id).name %></h3><br/>
-		Check in: <%= booking.time_start.strftime('%A, %d %b %Y') %><br/>
-		Check out: <%= (booking.time_end + 1.day).strftime('%A, %d %b %Y') %><br/><br/>
+		<h3><%= booking.listing.name %></h3><br/>
+		Check in: <%= booking.date_start.strftime('%A, %d %b %Y') %><br/>
+		Check out: <%= (booking.date_end + 1.day).strftime('%A, %d %b %Y') %><br/><br/>
 	<% end %>
 <% end %>
