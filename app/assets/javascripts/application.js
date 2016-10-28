@@ -15,7 +15,7 @@
 //= require jquery-ui
 //= require jquery.turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+
 
 
 var disableddates = (typeof disableddates === 'undefined') ? [] : disableddates;
@@ -39,7 +39,8 @@ function DisableSpecificDates(date) {
 					maxDate: new Date(nextYear),
           defaultDate: "+1w",
           changeMonth: true,
-          numberOfMonths: 2
+          numberOfMonths: 2,
+          dateFormat: "dd-mm-yy"
         })
         .on( "change", function() {
           to.datepicker( "option", "minDate", getDate( this ) );
@@ -50,7 +51,8 @@ function DisableSpecificDates(date) {
 				maxDate: new Date(nextYear),
         defaultDate: "+1w",
         changeMonth: true,
-        numberOfMonths: 2
+        numberOfMonths: 2,
+        dateFormat: "dd-mm-yy"
       })
       .on( "change", function() {
         from.datepicker( "option", "maxDate", getDate( this ) );

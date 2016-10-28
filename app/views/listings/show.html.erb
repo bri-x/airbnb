@@ -1,61 +1,75 @@
-<p id="notice"><%= notice %></p>
+<%= render 'carousel' %>
 
-<% if @listing.photos.present? %>
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <%= image_tag @listing.photos[0].medium.url %>
-    </div>
-
-    <div class="item">
-      <%= image_tag @listing.photos[1].medium.url %>
-    </div>
+<div class="inner-limit-container listing-show">
+  <div class="listing-text col-lg-12">
+    <h1><%= @listing.name %></h1>
+    <p><%= @listing.description %></p>
   </div>
 
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
+  <div class="listing-text col-lg-3 col-sm-6">
+    <div>
+    <p>Host</p>
+    <% if @listing.user.avatar_url %>
+      <%= image_tag @listing.user.avatar_url, class: "avatar-medium"  %>
+    <% else %>
+      <div class="avatar-medium"><span><%= @listing.user.name[0] %></span></div>
+    <% end %>
+    <p><%= @listing.user.name %></p>
+    </div>
+  </div>
+  <div class="listing-text col-lg-3 col-sm-6">
+    <div>
+    <p><%= @listing.city.name + ", " + @listing.city.country %></p>
+    </div>
+  </div>
+  <div class="listing-text col-lg-6 col-sm-12">
+    <div>
+    <p><%= @listing.property_type %></p>
+    <p><%= @listing.room_type %></p>
+    <p><%= @listing.capacity %> guest</p>
+    </div>
+  </div>
+  <div class="listing-text col-lg-6 col-sm-12">
+    <div>
+    <p>RM<%= @listing.price %> per night</p>
+    <p>Minimum stay: <%= @listing.min_stay %> night</p>
+    </div>
+  </div>
+  <div class="list-double col-lg-3 col-sm-6">
+    <div class="list">
+      <% if @listing.amenity_list %>
+        <ul class="double">
+          <% @listing.amenity_list.each do |listing| %>
+            <li><%= listing %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div class="list-outer col-lg-3 col-sm-6">
+    <div class="list">
+      <% if @listing.rule_list %>
+        <ul>
+          <% @listing.rule_list.each do |rule| %>
+            <li><%= rule %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+  <div class="listing-text col-lg-12">
+    <% if @listing.user == current_user %>
+    	<%= link_to 'Back', listings_path %> | 
+    	<%= link_to 'Edit', edit_listing_path(@listing) %> |
+    	<%= link_to 'Delete', listing_path(@listing), method: :delete %>
+    <% else %>
+    	Other users can book <br/>
+    	<%= render :partial => "reservations/form" %>
+    <% end %>
+  </div>
 </div>
-<% end %>
-
-<h1><%= @listing.name %></h1>
-<p><%= @listing.description %></p>
-<p><%= @listing.property_type %></p>
-<p><%= @listing.room_type %></p>
-<p><%= @listing.capacity %> guest</p>
-<p>RM<%= @listing.price %> per night</p>
-<p>Minimum stay: <%= @listing.min_stay %> night</p>
-<p><%= @listing.address %></p>
-<p><%= @listing.city.name + ", " + @listing.city.country %></p>
-<p><%= @listing.amenity_list %></p>
-<p><%= @listing.rule_list %></p>
-<p>Hosted by:<%= @listing.user.name %></p>
-
-<% if @listing.user == current_user %>
-	<%= link_to 'Back', listings_path %> | 
-	<%= link_to 'Edit', edit_listing_path(@listing) %> |
-	<%= link_to 'Delete', listing_path(@listing), method: :delete %>
-<% else %>
-	Other users can book <br/>
-	<%= render :partial => "reservations/form" %>
-<% end %>
-
 
 <script>
 	var disableddates = <%= @unavailable_dates.inspect.html_safe %>;
 </script>
+</div>

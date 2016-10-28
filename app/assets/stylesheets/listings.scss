@@ -2,6 +2,30 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
+  $responsive-unitless: $responsive / ($responsive - $responsive + 1);
+  $dimension: if(unit($responsive) == 'vh', 'height', 'width');
+  $min-breakpoint: $min / $responsive-unitless * 100;
+  
+  @media (max-#{$dimension}: #{$min-breakpoint}) {
+    font-size: $min;
+  }
+  
+  @if $max {
+    $max-breakpoint: $max / $responsive-unitless * 100;
+    
+    @media (min-#{$dimension}: #{$max-breakpoint}) {
+      font-size: $max;
+    }
+  }
+  
+  @if $fallback {
+    font-size: $fallback;
+  }
+  
+  font-size: $responsive;
+}
+
 $feather: #77C9D4;
 $marine: #57BC90;
 $forest: #015248;
@@ -10,51 +34,44 @@ $ligthgrey: #A5A5AF;
 
 .title {
 	background: linear-gradient(right top, $feather, $forest);
-	width: 100vw;
+	width: 100%;
 	height: 25vh;
-	padding-top: 100px;
-	padding-left: 25px;
+	position: relative;
+
 	h1 {
 		color: white;
-		font-size: 60px;
+		position: absolute;
+		left: 4vh;
+		bottom: 4vh;
+		@include responsive-font(5vw, 36px, 72px);
 	};
 };
 
-.listing-content {
-	overflow: hidden;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-}
-
-.listing {
-	width: 32vw;
-	text-align: center;
-}
-
-.listing-photo {
-	height: 18vw;
-	overflow: hidden;
-	background-color: $ligthgrey;
-
-	img {
-		max-width: 100%;
+.inner-limit-container {
+	.listing-photo {
+		height: 20vw;
+		position: relative;
+		overflow: hidden;
 	};
 
-}
+	.listing-photo img {
+		max-width: 100%;
+		position: absolute;
+    top: -100%;
+    bottom: -100%;
+    left: -100%;
+    right: -100%;
+    margin: auto;
 
-.listing-caption {
-	width: 32vw;
-	padding: 5px;
+	};
 
-	td {
-		color: $darkgrey;
+	.listing-caption {
+		padding: 5px;
 	};
 
 	a { 
     font-size: 20px;
 		font-family: 'Montserrat', sans-serif;
-		text-transform: uppercase;
 		color: $forest;
 
     text-decoration: none; 
@@ -62,11 +79,74 @@ $ligthgrey: #A5A5AF;
     display: block; 
     overflow: hidden; 
     white-space: nowrap;
-    width: 30vw; 
+    @include responsive-font(3vw, 20px, 28px);
 	};
 
 	a:visited {
 		color: $marine;
 	}
-}
 
+	.listing-caption-2 {
+		display: flex;
+		justify-content: space-between;
+		@include responsive-font(2vw, 15px, 20px);
+		padding-top: 10px;
+	}
+
+	.listing-separator {
+		border: 1px solid black;
+		margin-top: 5px;
+		margin-bottom: 10px;
+	};
+};
+
+#myCarousel {
+	max-height: 25vh;
+};
+
+.item img { 
+	height: 200px !important;
+};
+
+.avatar-medium {
+  border-radius: 75px;
+  width: 75px;
+  height: 75px;
+  background-color: $marine;
+  display: inline-block;
+
+  margin: auto;
+ 
+ 	position: relative; 
+
+  span {
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  };
+};
+
+.listing-show {
+	display: table;
+
+	> .listing-text {
+		min-height: 150px;
+		text-align: center;
+		
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	};
+
+	> .list-double {
+		column-count: 2;
+	};
+
+	.double {
+		padding-left: 10px;
+	};
+};

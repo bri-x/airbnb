@@ -10,7 +10,6 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
  *= require jquery-ui
  */
@@ -23,6 +22,10 @@ $marine: #57BC90;
 $forest: #015248;
 $darkgrey: #35353F;
 $ligthgrey: #A5A5AF;
+$teal: #056571;
+$watermelon: #FF6A5C;
+$fresh: #CCDFCB;
+$matte: #414141;
 
 body * {
 	font-family: 'Inconsolata', monospace;
@@ -32,123 +35,54 @@ body * {
   }
 }
 
+.inner-limit-container {
+  max-width: 1080px;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 /* ------------------------ navbar ------------------------ */
+
 nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  height: 30px;
-  padding-bottom: 15px;
   text-transform: uppercase;
+  margin-bottom: 10px!important;
 
-  .nav-header {
-    flex-grow: 8;
-    display: flex;
-    direction: row;
-    align-items: center;
-  }
-
-  .nav-collapse {
-    flex-grow: 4;
-  }
-  
-
-  .nav-brand {
+  .navbar-brand {
     color: $forest;
     font-size: 24px;
     text-decoration: none;
     font-family: 'Montserrat', sans-serif;
-    padding-right: 8px;
-  }
+  };
 
   .nav-search-icon {
-    border-right: 1px solid $forest;
+  	width: 50px;
+  	height: 25px;
     padding: 0px 8px;
     opacity: 0.5;
     transform: scale(-1, 1);
-  }
+    img { max-width: 100%; max-height: 100%;};
+  };
 
-  .nav-search {
-    flex-grow: 5;
-    display: inline-block;
+};
 
-    input[type="text"] {
-      border: none;
-      width: 90%;
-      font-size: 16px;
-    };
-    input[type=submit] {
-    display: none;
-    };
-  }
+.navbar-header {
+	.navbar-nav {
+		display: flex;
+		align-items: center;
+		height: 50px;
+		border-left: 1px solid $forest;
+	};
 
-  .nav-collapse {
-    width: auto;
-
-    .nav-right {
-      float: right;
-      position: relative;
-      top: 30px;
-
-      li {
-        float: left;
-        width: auto;
-        padding: 0px 10px;
-        list-style: none;
-        color: $darkgrey;
-        font-weight: bold;
-
-        a {
-          text-decoration: none;
-        };
-      } // end of li
-
-      /* The container <div> - needed to position the dropdown content */
-      .dropdown {
-          position: relative;
-      }
-
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 5px;
-        z-index:1000;
-        background-color: white;
-        min-width: 135px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-
-        div {
-          padding: 5px 10px;
-          text-align: right;
-        };
-
-        .separator {
-          width: 95%;
-          height: 1px;
-          margin: 5px 5px 0px 5px;
-          padding: 0px;
-          border-top: 1px solid $ligthgrey;
-        }
-
-        input[type="submit"] {
-         background:none!important;
-         border:none; 
-         padding:0!important;
-         font: inherit;
-         text-transform: uppercase;
-         /*border is optional*/
-         cursor: pointer;
-        }
-      };
-
-    }; // end of nav-right
-  } // end of nav-collapse
-
-
-}
+	input[type="text"] {
+    border: none;
+    width: 90%;
+    font-size: 16px;
+   };
+};
 
 /* ------------------------  ------------------------ */
+
 
 .avatar-small {
   border-radius: 40px;
@@ -157,7 +91,6 @@ nav {
   background-color: $marine;
   display: inline-block;
   position: relative;
-  top: -10px;
   
   span {
     font-size: 20px;
@@ -167,3 +100,5 @@ nav {
     color: white;
   }
 }
+
+

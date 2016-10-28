@@ -19,7 +19,6 @@ class Reservation < ActiveRecord::Base
   end
 
   def add_unavailable_dates
-    byebug
     set_listing_dates
     @listing.unavailable_dates += @dates
     begin

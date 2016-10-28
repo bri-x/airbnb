@@ -1,22 +1,68 @@
-<%= image_tag(@user.avatar.thumb.url) %>
-<h1><%= @user.name %></h1>
-<h2>My listings</h2>
-<% @user.listings.each do |list| %>
-	<h3><%= list.name %></h3>
-	<p><%= list.description %></p>
-	<% if list.user == current_user %>
-      <tr>
-        <td><%= link_to 'Edit', edit_listing_path(list) %>
-          <%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-      <% end %>
-<% end %><br/><br/>
+<div class="inner-limit-container row">
 
-<% if @user == current_user %>
-	<h2>My bookings</h2>
-	<% @user.reservations.each do |booking| %>
-		<h3><%= booking.listing.name %></h3><br/>
-		Check in: <%= booking.date_start.strftime('%A, %d %b %Y') %><br/>
-		Check out: <%= (booking.date_end + 1.day).strftime('%A, %d %b %Y') %><br/><br/>
-	<% end %>
-<% end %>
+	<div class="col-lg-4">
+		<div class="profile-top">
+			<% if current_user.avatar_url %>
+			  <%= image_tag current_user.avatar_url, class: "avatar-medium"  %>
+			<% else %>
+			  <div class="avatar-medium"><span><%= current_user.name[0] %></span></div>
+			<% end %>
+			<h1><%= @user.name %></h1>
+			<p><%= Faker::Lorem.paragraph %></p>
+		</div>
+	</div>
+
+	<div class="col-lg-8" style="padding: 0px !important;">
+		<div class="profile-content">
+		<div class="my-listings">
+			<h2>Listings</h2>
+			<% if @user.listings %>
+			<% @user.listings.each do |list| %>
+			<div class="row">
+				<div class="profile-content-photo col-lg-5">
+					<% if list.photos.present? %>
+						<%= image_tag list.photos[0].square.url %>
+					<% else %>
+					No image
+					<% end %>
+				</div>
+				<div class="col-lg-7">
+					<div class="profile-listing-caption">
+					<div><%= link_to list.name, listing_path(list) %></div>
+					<div>
+					<div class="profile-listing-caption-2"><span>RM<%= list.price %></span>
+	        <span><%= list.room_type %></span>
+	        <span><%= list.city.name %></span>
+	        </div>
+	        
+					<% if list.user == current_user %>
+						<div>
+			        <%= link_to 'Edit', edit_listing_path(list) %> | 
+			        <%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %>
+			      </div>
+			      
+			    <% end %>
+			    <div class="listing-separator"></div>
+			  </div>
+			  </div>
+			  </div>
+			</div>
+			<% end %><br/><br/>
+			<% end %>
+		</div>
+
+		<% if @user == current_user %>
+		<div class="my-bookings">
+			<h2>Bookings</h2>
+			<% @user.reservations.each do |booking| %>
+				<h3><a href="<%= listing_path(booking.listing) %>"><%= booking.listing.name %></a></h3>
+				Check in: <%= booking.date_start.strftime('%A, %d %b %Y') %><br/>
+				Check out: <%= (booking.date_end + 1.day).strftime('%A, %d %b %Y') %><br/><br/>
+			<% end %>
+		</div>
+		<% end %>
+		</div>
+	</div>
+
+</div>
+

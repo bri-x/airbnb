@@ -1,46 +1,51 @@
 <div class="home-container">
+
 <div class="home-search-box">
   <div class="outer-wrapper">
-    <div class="wrapper">
-    <h1>Experience a city like a local</h1>
-    <p>Feel at home, wherever you go</p>
-
-    <div class="row">
-      <div class="col-lg-12">
-        <%= form_tag '/search', method: :get do %>
-          <%= text_field_tag :location, params[:location], placeholder:"Where to go?" %>
-          <%= date_field_tag 'date[start]', params[:date], placeholder:'Check-in date', id:"from" %>
-          <%= date_field_tag 'date[end]', params[:date], placeholder:'Check-out date', id:"to" %>
-          <%= number_field_tag :capacity, params[:capacity], placeholder:'No of guest(s)' %>
-          <%= submit_tag 'Search', class: 'btn btn-primary' %>
-        <% end %>
-      </div> <!-- col -->
-    </div> <!-- row -->
-    </div> <!-- wrapper -->
   </div>
+
+  <div class="wrapper col-lg-12">
+  <div>
+  <h1>Experience a city like a local</h1>
+  <p>Feel at home, wherever you go</p>
+
+    <div>
+      <%= form_tag '/search', method: :get do %>
+        <%= text_field_tag :location, params[:location], placeholder:"Where to go?" %>
+        <%= date_field_tag 'date[start]', params[:date], placeholder:'Check-in date', id:"from" %>
+        <%= date_field_tag 'date[end]', params[:date], placeholder:'Check-out date', id:"to" %>
+        <%= number_field_tag :capacity, params[:capacity], placeholder:'No of guest(s)' %>
+        <%= submit_tag 'Search', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+    </div>
+
+  </div> <!-- wrapper -->
 </div>
 
 
 
+
   <div class="explore">
-    <div class="col-4">
+    <div class="explore-title col-lg-4 col-md-6 hidden-xs">
       <a href='/listings/'><h1>Explore the world ><br/><br/></h1></a>
     </div>
-    <div class="col-8">
-      <a href="/search?&amp;location=new+york&amp;commit=Search"><div class="quarter overlay-text">
+
+    <div class="explore-cities col-lg-8 col-md-6 col-xs-12">
+      <a href="/search?&amp;location=new+york&amp;commit=Search">
+      <div class="half-up overlay-text overlay-image">
         NEW YORK
       </div>
       </a>
 
-      <div class="three-quarter">
-        <a href="/search?&amp;location=tokyo&amp;commit=Search"><div class="half-1 overlay-text">
-          TOKYO
+      <div class="half-down">
+        <div class="explore-image-wrapper">          
+          <a href="/search?&amp;location=tokyo&amp;commit=Search"><div class="half-1 overlay-image overlay-text">TOKYO</div></a>
         </div>
-        </a>
-        <a href="/search?&amp;location=paris&amp;commit=Search"><div class="half-2 overlay-text">
-          PARIS
+
+        <div class="explore-image-wrapper">
+          <a href="/search?&amp;location=paris&amp;commit=Search"><div class="half-2 overlay-image overlay-text">PARIS</div></a>
         </div>
-        </a>
       </div>
 
 

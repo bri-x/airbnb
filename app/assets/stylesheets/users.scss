@@ -1,3 +1,84 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$feather: #77C9D4;
+$marine: #57BC90;
+$forest: #015248;
+$darkgrey: #35353F;
+$ligthgrey: #A5A5AF;
+
+.inner-limit-container {
+	background-color: rgba(200,200,220,0.5);
+	height: 91vh;
+	display: table;
+
+	[class*="col-"] {
+		float: none;
+    display: table-cell;
+    vertical-align: top;
+	};
+
+	.profile-top {
+		margin-top: 5vh;
+		text-align: center;
+		h1 {padding: 1vh 0;};
+		p { text-align: justify; padding: 0 2vh;}
+	};
+
+	.profile-content {
+		height: 91vh;
+		overflow: scroll;
+
+		display: flex;
+		flex-direction: column;
+		> div { flex-grow: 6; padding: 15px;}
+		.my-listings { background-color: white; }
+		.my-bookings { background-color: $marine; opacity: 0.5;}
+	}
+
+	.profile-content-photo img {
+		max-width: 100%;
+		height: 150px;
+		overflow-y: hidden;
+	};
+
+	.profile-listing-caption {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 150px;
+		padding-top: 10px;
+	}
+
+	.profile-listing-caption-2 {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.listing-separator {
+		border: 1px solid black;
+		margin-top: 5px;
+		margin-bottom: 10px;
+	};
+
+};
+
+.avatar-medium {
+  border-radius: 200px;
+  width: 200px;
+  height: 200px;
+  background-color: $marine;
+  display: inline-block;
+
+  margin: auto;
+ 
+ 	position: relative; 
+
+  span {
+    font-size: 180px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  };
+};
+
+

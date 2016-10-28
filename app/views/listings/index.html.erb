@@ -2,35 +2,37 @@
   <h1>Listings</h1>
 </div>
 
+<div class="inner-limit-container">
+  <% @listings.each do |list| %>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="listing-photo">
+        <% if list.photos.present? %>
+          <%= image_tag list.photos[0].square.url %>
+        <% else %>
+          <%= image_tag 'host.jpeg' %>
+        <% end %>
+      </div>
+      <div class="listing-caption">          
+          <div><%= link_to list.name, listing_path(list) %></div>
+          
+          <div>
+            <div class="listing-caption-2"><span>RM<%= list.price %></span>
+              <span><%= list.room_type %></span>
+              <span><%= list.city.name %></span>
+            </div>
+            
+            <% if list.user == current_user %>
+              <div>
+                <%= link_to 'Edit', edit_listing_path(list) %> | 
+                <%= link_to 'Destroy', list, method: :delete, data: { confirm: 'Are you sure?' } %>
+              </div>
+            <% end %>
 
-<div class="listing-content">
-  <% @listings.each do |listing| %>
-    <div class="listing">
-    <div class="listing-photo">
-      PHOTO HERE
-    </div>
-    <table class="listing-caption">
-      <tr><td colspan="2">
-        <%= link_to listing.name, listing %>
-      </td></tr>
-      <tr>
-        <td>RM<%= listing.price %> per night</td>
-        <td><%= listing.room_type %></td>
-      </tr>
-      
-      <tr>
-        <td colspan="2">
-        <% if listing.user == current_user %>
-          <%= link_to 'Edit', edit_listing_path(listing) %> | 
-          <%= link_to 'Destroy', listing, method: :delete, data: { confirm: 'Are you sure?' } %>
-          <% else %>
-          <br/>
-          <% end %>
-        </td>
-      </tr>
-    </table>
+            <div class="listing-separator"></div>
+        </div>
+      </div>
     </div>
   <% end %>
-</div>
 
 <center><%= will_paginate @listings %></center>
+</div>

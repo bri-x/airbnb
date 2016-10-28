@@ -2,7 +2,6 @@ class PaymentsController < ApplicationController
 	before_action :require_login
 
   def create
-    byebug
   	amount = params[:payment][:total_price]
     nonce = params[:payment_method_nonce]
     @reservation = Reservation.find(params[:payment][:reservation_id])
@@ -25,10 +24,11 @@ class PaymentsController < ApplicationController
       # checks for successful payment
       if @result.success?
         @reservation.confirm
+        SendEmailJob.perform_later @reservation
 
         Payment.create(reservation_id: params[:payment][:reservation_id], braintree_payment_id: @result.transaction.id, status: @result.transaction.status, fourdigit: @result.transaction.credit_card_details.last_4)
-
-        redirect_to listing_reservation_path(listing_id: @reservation.listing_id, id: @reservation), notice: "Congratulations! Your transaction is successful!" and return
+        
+        redirect_to user_path(current_user), notice: "Congratulations! Your transaction is successful!" and return
       else
         flash[:alert] = "Something went wrong while processing your transaction. Please try again!"
         @reservation.remove_unavailable_dates

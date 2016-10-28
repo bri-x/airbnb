@@ -12,32 +12,26 @@ $ligthgrey: #A5A5AF;
 .home-container {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100vh;
+  height: 91vh;
 
   scroll-snap-type: mandatory;
 	scroll-snap-points-y: repeat(100%);
   scroll-snap-destination: 50% 0%;
   scroll-snap-align: center;
-
-}
+};
 
 p {
 	font-size: 20px;
-}
+};
 
 .home-search-box {
 	height: 91vh;
 
 	background-image: url("home-search.jpg");
   background-size: cover;
+  background-position: center;
 
-/*  width: 100%;	
-  height: 91vh;
-  display: flex;
-  direction: column;
-  align-items: center;
-  justify-content: center;*/
-  
+  position: relative;
 
   .outer-wrapper {
   	width: 100vw;
@@ -45,32 +39,42 @@ p {
   	background: linear-gradient(right top, $feather, $forest);
   	opacity: 0.8;
 
+	  display: flex;
+	  direction: column;
+	  align-items: center;
+	  justify-content: center;
+
+	  position: absolute;
+  	top: 0;
+  	left: 0;
   };
 
-    .wrapper {
+  .wrapper {
+	  width: 100vw;
+  	height: 91vh;
   	text-align: center;
   	position: absolute;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -50%);
-  	width: 75%;
+  	top: 0;
+  	left: 0;
+  	z-index: 10;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+
   	color: white;
 
   	h1 { color: #D5D5DF; };
-  	};
+  };
 };
 
-
-
 .explore {
-height: 100vh;
+height: 91vh;
 background: linear-gradient(right top, $feather, $forest);
 display: flex;
 direction: row;
 overflow: hidden;
 	
-	.col-4 {
-		width: 33vw;
+	.explore-title {
 		background: white;
 		padding-left: 50px;
 		a {color: $forest;};
@@ -84,47 +88,52 @@ overflow: hidden;
 		h1 { font-size: 48px; line-height: 60px; }
 	};
 
-	.col-8 {
-		width: 67vw;
+	.explore-cities {
+		padding-left: 0px;
+		padding-right: 0px;
 
-		.quarter {
+		.half-up, .half-down {
 			height: 50%;
-			background-image: url("city-new-york.jpg");
-			background-size: cover;
-			opacity: 0.4;
+			width: 100%;
 		};
 
-		.quarter:hover {
+		.overlay-image {
+			background-size: cover;
+			background-position: center;
+			opacity: 0.4;
+		}
+
+		.overlay-image:hover {
 			opacity: 1;
 		}
 
-		.three-quarter {
-			height: 50%;
+		.half-up {
+			background-image: url("city-new-york.jpg");
+		};
 
+		.half-down {
 			display: flex;
-			direction: row;
-			overflow: hidden;
 
-			div {
-				width: 33.5vw;
-				height: 50vh;
-				opacity: 0.4;
-			}
-			
-			a:hover {
-				div {
-				opacity: 1;
+			.explore-image-wrapper { 
+				flex-grow: 6;
+				position: relative;
+
+				.overlay-image, .overlay-text {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;					
 				};
+
 			};
 
 			.half-1 {
 				background-image: url("city-japan.jpg");
-				background-size: cover;
 			};
 
 			.half-2 {
 				background-image: url("city-paris2.jpg");
-				background-size: cover;
 			};
 
 		};
@@ -155,7 +164,7 @@ overflow: hidden;
 };
 
 .host {
-	height: 120vh;
+	height: 100vh;
 	background-image: url("host.jpeg");
 	background-size: cover;
 	background-position: right bottom;

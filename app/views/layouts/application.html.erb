@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Pairbnb</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'application', params[:controller], media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', params[:controller], 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat" rel="stylesheet"> 
@@ -13,8 +13,6 @@
     <div class="alert alert-<%= key %>"><%= value %></div>
   <% end %>
 	<%= render 'layouts/navbar' %>
-	<div>
-		<%= yield %>
-	</div>
+	<div class="main-content container-fluid" style="padding: 0px; "><%= yield %></div>
 </body>
 </html>

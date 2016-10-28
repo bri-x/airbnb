@@ -1,0 +1,65 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$feather: #77C9D4;
+$marine: #57BC90;
+$forest: #015248;
+$darkgrey: #35353F;
+$ligthgrey: #A5A5AF;
+
+#clearance {
+	padding: 5vh 5vh 3vh 5vh;
+	margin-left: 5vh;
+	background-color: rgba(255,255,255,0.5);
+
+	h2 {
+		text-align: center;
+		color: $forest;
+	};
+
+	.clearance-label {
+		padding-top: 5px;
+		margin-top: 3vh;
+		color: black;
+		text-transform: uppercase;
+	};
+
+	.clearance-button {
+		margin-top: 3vh;
+		display: flex;
+		justify-content: center;
+	}
+
+	.other-links {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 5vh;
+		align-items: flex-end;
+		a { font-family: 'Montserrat', sans-serif; }
+	}
+
+}
+
+	.btn-default, .btn-default:hover, .btn-default:active, .btn-default:visited {
+    color: white !important;
+    background-color: $forest !important;
+    font-family: 'Montserrat', sans-serif;
+    border: none !important; 
+	}
+
+  .main-content {
+		background: linear-gradient(right top, $feather, $forest) !important;
+		min-height: 92vh;
+		display: flex;
+		align-items: center;
+	}
+
+	.button-with-fb {
+		background-image: url('../fb-button.png');
+		background-size: contain;
+		border-radius: 5px;
+		width: 25px;
+		height: 25px;
+		margin-left: 3vh;
+	}
